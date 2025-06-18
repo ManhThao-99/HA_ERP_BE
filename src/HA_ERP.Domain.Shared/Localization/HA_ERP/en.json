@@ -4,6 +4,26 @@
     "AppName": "HA_ERP",
     "Menu:Home": "Home",
     "Welcome": "Welcome",
-    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io."
+    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
+
+    "Permission:Staffs": "Staffs Management",
+    "Permission:Staffs.Create": "Creating new Staffs",
+    "Permission:Staffs.Edit": "Editing the Staffs",
+    "Permission:Staffs.Delete": "Deleting the Staffs",
+
+    "Permission:Organizations": "Organizations Management",
+    "Permission:Organizations.Create": "Creating new Organizations",
+    "Permission:Organizations.Edit": "Editing the Organizations",
+    "Permission:Organizations.Delete": "Deleting the Organizations"
+
+
   }
+
+
+
+
+
+
+
+
 }
