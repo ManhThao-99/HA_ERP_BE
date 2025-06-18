@@ -12,7 +12,9 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
-
+using HA_ERP.Staffs;
+using HA_ERP.Organizations;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 namespace HA_ERP.EntityFrameworkCore;
 
 [ReplaceDbContext(typeof(IIdentityDbContext))]
@@ -51,7 +53,17 @@ public class HA_ERPDbContext :
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
 
+    //app dbsets
+    public DbSet<Staff> Staffs { get; set; }
+    public DbSet<Organization> Organizations { get; set; }
+
     #endregion
+
+
+
+
+
+
 
     public HA_ERPDbContext(DbContextOptions<HA_ERPDbContext> options)
         : base(options)
@@ -82,5 +94,44 @@ public class HA_ERPDbContext :
         //    b.ConfigureByConvention(); //auto configure for the base class props
         //    //...
         //});
+
+        builder.Entity<Staff>(b =>
+        {
+            b.ToTable(HA_ERPConsts.DbTablePrefix + "Staffs", HA_ERPConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.Code).IsRequired().HasMaxLength(12); //temp (EMP*********)
+            b.Property(x => x.Name).IsRequired().HasMaxLength(36);
+            b.Property(x => x.Mobile).IsRequired().HasMaxLength(12);
+            b.Property(x => x.Email).IsRequired().HasMaxLength(100);
+            b.Property(x => x.Address).HasMaxLength(150);
+            b.Property(x => x.BankAccountName).HasMaxLength(36);
+            b.Property(x => x.BankAccountNo).HasMaxLength(36);
+            b.Property(x => x.BankName).HasMaxLength(100);
+            b.Property(x => x.BankAddress).HasMaxLength(150);
+            b.HasIndex(x => x.Code).IsUnique();
+            b.HasIndex(x => x.Email).IsUnique();
+            b.HasIndex(x => x.Mobile).IsUnique();
+            b.HasOne<Organization>()
+                .WithMany()
+                .HasForeignKey(x => x.OrganizationId)
+                .IsRequired();
+            b.HasOne<Staff>()
+                .WithMany()
+                .HasForeignKey(x => x.ManagerId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict); //optional, can be null
+
+
+        });
+
+        builder.Entity<Organization>(b =>
+        {
+            b.ToTable(HA_ERPConsts.DbTablePrefix + "Organizations", HA_ERPConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.Code).IsRequired().HasMaxLength(6); //temp (ORG***)
+            b.Property(x => x.Name).IsRequired().HasMaxLength(50);
+
+        });
+
     }
 }

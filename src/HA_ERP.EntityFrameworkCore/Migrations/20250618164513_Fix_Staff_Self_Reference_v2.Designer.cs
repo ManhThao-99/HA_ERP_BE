@@ -4,6 +4,7 @@ using HA_ERP.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace HA_ERP.Migrations
 {
     [DbContext(typeof(HA_ERPDbContext))]
-    partial class HA_ERPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250618164513_Fix_Staff_Self_Reference_v2")]
+    partial class Fix_Staff_Self_Reference_v2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
