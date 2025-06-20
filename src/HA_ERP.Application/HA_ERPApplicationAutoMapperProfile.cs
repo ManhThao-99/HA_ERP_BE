@@ -12,7 +12,12 @@ public class HA_ERPApplicationAutoMapperProfile : Profile
          * Alternatively, you can split your mapping configurations
          * into multiple profile classes for a better organization. */
 
-        CreateMap<Staff, StaffDto>();
-        CreateMap<Organization, OrganizationDto>();
+        CreateMap<Staff, StaffDto>().ReverseMap();
+        CreateMap<CreateStaffDto, Staff>().ReverseMap();
+        CreateMap<UpdateStaffDto, Staff>().ReverseMap();
+
+
+        CreateMap<Organization, OrganizationDto>().ReverseMap();
     }
 }
+    

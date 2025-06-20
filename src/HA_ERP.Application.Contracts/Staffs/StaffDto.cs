@@ -10,7 +10,7 @@ namespace HA_ERP.Staffs
     public class StaffDto : AuditedEntityDto<int>
     {
         public int OrganizationId { get; set; }
-        public int ManagedId { get; set; }
+        public int? ManagerId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public string Mobile { get; set; }

@@ -11,7 +11,7 @@ namespace HA_ERP.Staffs
     public class Staff : FullAuditedAggregateRoot<int>
     {
         public int OrganizationId { get; set; }
-        public int ManagerId { get; set; }
+        public int? ManagerId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public string Mobile { get; set; }
