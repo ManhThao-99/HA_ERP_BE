@@ -3,6 +3,10 @@
   "texts": {
     "AppName": "HA_ERP",
     "Menu:Home": "Home",
+    "Menu:Organization": "Organization",
+    "Menu:Staff": "Staff",
+
+
     "Welcome": "Welcome",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
 
