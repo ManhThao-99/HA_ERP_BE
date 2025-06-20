@@ -12,7 +12,7 @@ namespace HA_ERP.Staffs
     {
         Task<StaffDto> GetAsync(int id);
 
-        Task<PagedResultDto<StaffDto>> GetListAsync(GetStaffListDto input);
+        Task<PagedResultDto<StaffDto>> GetListAsync();
 
         Task<StaffDto> CreateAsync(CreateStaffDto input);
 

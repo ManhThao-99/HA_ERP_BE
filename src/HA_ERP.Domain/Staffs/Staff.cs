@@ -22,7 +22,7 @@ namespace HA_ERP.Staffs
         public string BankName { get; set; }
         public string BankAddress { get; set; }
 
-        private Staff()
+        public Staff()
         {
             
         }
@@ -32,12 +32,15 @@ namespace HA_ERP.Staffs
             OrganizationId = organizationId;
             ManagerId = managerId;
             Code = code;
+
             Name = name;
             Mobile = mobile;
             Email = email;
+
             Address = address;
             BankAccountName = bankAccountName;
             BankAccountNo = bankAccountNo;
+
             BankName = bankName;
             BankAddress = bankAddress;
             

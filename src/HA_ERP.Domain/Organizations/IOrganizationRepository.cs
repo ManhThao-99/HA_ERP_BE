@@ -10,5 +10,11 @@ namespace HA_ERP.Organizations
 {
     public interface IOrganizationRepository : IRepository<Organization, int>
     {
+        Task<List<Organization>> GetListAsync(
+            int skipCount,
+            int maxResultCount,
+            string sorting,
+            string filter = null
+        );
     }
 }

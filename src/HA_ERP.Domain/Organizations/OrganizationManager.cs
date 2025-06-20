@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Domain.Services;
 
 namespace HA_ERP.Organizations
@@ -15,5 +16,7 @@ namespace HA_ERP.Organizations
         {
             _organizationRepository = organizationRepository;
         }
+
+       
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Domain.Repositories;
 
 namespace HA_ERP.Organizations
 {
@@ -22,32 +23,72 @@ namespace HA_ERP.Organizations
             _organizationManager = organizationManager;
         }
 
+
         [Authorize(HA_ERPPermissions.Organizations.Create)]
-        public Task<OrganizationDto> CreateAsync(CreateOrganizationDto input)
+        public async Task<OrganizationDto> CreateAsync(CreateOrganizationDto input)
         {
-            throw new NotImplementedException();
+            var org = new Organization
+            {
+                Name = input.Name,
+                Code = input.Code
+            };
+
+            await _organizationRepository.InsertAsync(org);
+
+            return ObjectMapper.Map<Organization, OrganizationDto>(org);
+
         }
+
 
         [Authorize(HA_ERPPermissions.Organizations.Delete)]
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            await _organizationRepository.DeleteAsync(id);
         }
 
-        public Task<CreateOrganizationDto> GetAsync(int id)
+
+        public async Task<OrganizationDto> GetAsync(int id)
         {
-            throw new NotImplementedException();
+            var organization = await _organizationRepository.GetAsync(id);
+            return ObjectMapper.Map<Organization, OrganizationDto>(organization);
         }
 
-        public Task<PagedResultDto<OrganizationDto>> GetListAsync(GetStaffListDto input)
+        public async Task<PagedResultDto<OrganizationDto>> GetListAsync(GetListOrganizationDto input)
         {
-            throw new NotImplementedException();
+            if (input.Sorting.IsNullOrWhiteSpace())
+            {
+                input.Sorting = nameof(Organization.Name);
+            }
+
+            var organizations = await _organizationRepository.GetListAsync(
+                input.SkipCount,
+                input.MaxResultCount,
+                input.Sorting,
+                input.Filter
+            );
+
+            var totalCount = input.Filter == null
+                ? await _organizationRepository.CountAsync()
+                : await _organizationRepository.CountAsync(
+                    author => author.Name.Contains(input.Filter));
+
+            return new PagedResultDto<OrganizationDto>(
+                totalCount,
+                ObjectMapper.Map<List<Organization>, List<OrganizationDto>>(organizations)
+            );
         }
+
+
         [Authorize(HA_ERPPermissions.Organizations.Update)]
-
-        public Task UpdateAsync(int id, UpdateOrganizationDto input)
+        public async Task UpdateAsync(int id, UpdateOrganizationDto input)
         {
-            throw new NotImplementedException();
+            var org = await _organizationRepository.GetAsync(id);
+            org.Name = input.Name;
+            org.Code = input.Code;
+
+            await _organizationRepository.UpdateAsync(org);
+
+            ObjectMapper.Map<Organization, OrganizationDto>(org);
         }
     }
 }
