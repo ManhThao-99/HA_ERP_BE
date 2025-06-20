@@ -11,7 +11,7 @@ namespace HA_ERP.Staffs
     {
         [Required]
         public int OrganizationId { get; set; }
-        public int ManagerId { get; set; }
+        public int? ManagerId { get; set; }
         [Required]
         [StringLength(StaffConsts.MaxCodeLength)]
         public string Code { get; set; }

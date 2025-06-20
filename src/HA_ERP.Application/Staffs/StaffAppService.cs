@@ -1,4 +1,4 @@
-﻿using HA_ERP.Organizations;
+using HA_ERP.Organizations;
 using HA_ERP.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using System;
@@ -16,39 +16,21 @@ namespace HA_ERP.Staffs
     [Authorize(HA_ERPPermissions.Staffs.Default)]
     public class StaffAppService : HA_ERPAppService, IStaffAppService
     {
-        private readonly IOrganizationAppService _organizationAppService;
+        private readonly StaffManager _staffManager;
 
         private readonly IStaffRepository _staffRepository;
 
-        public StaffAppService(IOrganizationAppService organizationAppService, IStaffRepository staffRepository)
+        public StaffAppService(StaffManager staffManager, IStaffRepository staffRepository)
         {
-            _organizationAppService = organizationAppService;
+            this._staffManager = staffManager;
             _staffRepository = staffRepository;
         }
 
         [Authorize(HA_ERPPermissions.Staffs.Create)]
         public async Task<StaffDto> CreateAsync(CreateStaffDto input)
         {
-            var staff = new Staff
-            {
-                OrganizationId = input.OrganizationId,
-                ManagerId = input.ManagerId,
-                Code = input.Code,
-
-                Name = input.Name,
-                Mobile = input.Mobile,
-                Email = input.Email,
-
-                Address = input.Address,
-                BankAccountName = input.BankAccountName,
-                BankAccountNo = input.BankAccountNo,
-
-                BankName = input.BankName,
-                BankAddress = input.BankAddress
-
-            };
+            var staff = ObjectMapper.Map<CreateStaffDto, Staff>(input);
             await _staffRepository.InsertAsync(staff);
-
             return ObjectMapper.Map<Staff, StaffDto>(staff);
         }
 
@@ -61,7 +43,7 @@ namespace HA_ERP.Staffs
 
         public async Task<StaffDto> GetAsync(int id)
         {
-            var staff = await _staffRepository.GetAsync(id);  
+            var staff = await _staffManager.GetStaffOrThrowAsync(id);  
             return ObjectMapper.Map<Staff, StaffDto>(staff);
 
         }
@@ -82,27 +64,14 @@ namespace HA_ERP.Staffs
         [Authorize(HA_ERPPermissions.Staffs.Update)]
         public async Task UpdateAsync(int id, UpdateStaffDto input)
         {
-            var staff = await _staffRepository.GetAsync(id);
+            // Kiểm tra tồn tại nhân viên cần sửa
+            var staff = await _staffManager.GetStaffOrThrowAsync(id);
 
-            var exists = await _staffRepository.AnyAsync(
-                x => x.Name == input.Name && x.Id != id
-            );
-            if (exists)
-            {
-                throw new UserFriendlyException("Tên nhân viên đã tồn tại!");
-            }
+            // Kiểm tra trùng tên (trừ chính nó)
+            await _staffManager.CheckStaffNameExistsAsync(input.Name, id);
 
-            staff.OrganizationId = input.OrganizationId;
-            staff.ManagerId = input.ManagerId;
-            staff.Code = input.Code;
-            staff.Name = input.Name;
-            staff.Mobile = input.Mobile;
-            staff.Email = input.Email;
-            staff.Address = input.Address;
-            staff.BankAccountName = input.BankAccountName;
-            staff.BankAccountNo = input.BankAccountNo;
-            staff.BankName = input.BankName;
-            staff.BankAddress = input.BankAddress;
+            // Map dữ liệu từ input sang staff (có thể dùng ObjectMapper hoặc gán thủ công)
+            ObjectMapper.Map(input, staff);
 
             await _staffRepository.UpdateAsync(staff);
         }

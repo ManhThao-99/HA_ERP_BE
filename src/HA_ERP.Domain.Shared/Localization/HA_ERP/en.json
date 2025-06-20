@@ -14,9 +14,14 @@
     "Permission:Organizations": "Organizations Management",
     "Permission:Organizations.Create": "Creating new Organizations",
     "Permission:Organizations.Edit": "Editing the Organizations",
-    "Permission:Organizations.Delete": "Deleting the Organizations"
+    "Permission:Organizations.Delete": "Deleting the Organizations",
 
 
+
+    "HAERP:00002": "Không tìm thấy nhân viên với id: {staffId}",
+    "HAERP:00002": "Không tìm thấy nhân viên với id: {staffName}",
+
+    "HAERP:00001": "Đã tồn tại nhân viên với tên: {name}"
   }
 
 
