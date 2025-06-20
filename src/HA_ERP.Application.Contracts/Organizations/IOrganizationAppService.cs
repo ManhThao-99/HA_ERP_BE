@@ -11,9 +11,9 @@ namespace HA_ERP.Organizations
 {
     public interface IOrganizationAppService : IApplicationService
     {
-        Task<CreateOrganizationDto> GetAsync(int id);
+        Task<OrganizationDto> GetAsync(int id);
 
-        Task<PagedResultDto<OrganizationDto>> GetListAsync(GetStaffListDto input);
+        Task<PagedResultDto<OrganizationDto>> GetListAsync(GetListOrganizationDto input);
 
         Task<OrganizationDto> CreateAsync(CreateOrganizationDto input);
 
