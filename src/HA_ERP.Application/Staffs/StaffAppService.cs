@@ -1,24 +1,20 @@
-using HA_ERP.Organizations;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using HA_ERP.Permissions;
 using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Volo.Abp;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Domain.Repositories;
-using Volo.Abp.ObjectMapping;
+
 
 namespace HA_ERP.Staffs
 {
     [Authorize(HA_ERPPermissions.Staffs.Default)]
     public class StaffAppService : HA_ERPAppService, IStaffAppService
     {
+        
         private readonly StaffManager _staffManager;
 
         private readonly IStaffRepository _staffRepository;
+
 
         public StaffAppService(StaffManager staffManager, IStaffRepository staffRepository)
         {
@@ -34,7 +30,6 @@ namespace HA_ERP.Staffs
             return ObjectMapper.Map<Staff, StaffDto>(staff);
         }
 
-
         [Authorize(HA_ERPPermissions.Staffs.Delete)]
         public async Task DeleteAsync(int id)
         {
@@ -43,9 +38,8 @@ namespace HA_ERP.Staffs
 
         public async Task<StaffDto> GetAsync(int id)
         {
-            var staff = await _staffManager.GetStaffOrThrowAsync(id);  
+            var staff = await _staffManager.GetStaffOrThrowAsync(id);
             return ObjectMapper.Map<Staff, StaffDto>(staff);
-
         }
 
         public async Task<PagedResultDto<StaffDto>> GetListAsync()
@@ -55,10 +49,7 @@ namespace HA_ERP.Staffs
 
             var totalCount = staffDtoList.Count;
 
-            return new PagedResultDto<StaffDto>(
-                totalCount,
-                staffDtoList
-            );
+            return new PagedResultDto<StaffDto>(totalCount, staffDtoList);
         }
 
         [Authorize(HA_ERPPermissions.Staffs.Update)]
@@ -75,6 +66,5 @@ namespace HA_ERP.Staffs
 
             await _staffRepository.UpdateAsync(staff);
         }
-
     }
 }
