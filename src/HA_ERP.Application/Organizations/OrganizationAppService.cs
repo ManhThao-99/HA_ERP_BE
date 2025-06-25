@@ -1,11 +1,12 @@
-﻿using System;
+﻿using HA_ERP.Organizstions;
+using HA_ERP.Permissions;
+using HA_ERP.Staffs;
+using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HA_ERP.Permissions;
-using HA_ERP.Staffs;
-using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
 
@@ -29,6 +30,10 @@ namespace HA_ERP.Organizations
         [Authorize(HA_ERPPermissions.Organizations.Create)]
         public async Task<OrganizationDto> CreateAsync(CreateOrganizationDto input)
         {
+
+            await _organizationManager.CheckDuplicateAsync(input.Code, input.Name);
+
+
             var org = new Organization { Name = input.Name, Code = input.Code };
 
             await _organizationRepository.InsertAsync(org);
@@ -39,11 +44,15 @@ namespace HA_ERP.Organizations
         [Authorize(HA_ERPPermissions.Organizations.Delete)]
         public async Task DeleteAsync(int id)
         {
+            await _organizationManager.CheckNotFoundAsync(id);
+            await _organizationManager.CheckHasStaffAsync(id);
+
             await _organizationRepository.DeleteAsync(id);
         }
 
         public async Task<OrganizationDto> GetAsync(int id)
         {
+            await _organizationManager.CheckNotFoundAsync(id);
             var organization = await _organizationRepository.GetAsync(id);
             return ObjectMapper.Map<Organization, OrganizationDto>(organization);
         }
@@ -81,12 +90,14 @@ namespace HA_ERP.Organizations
         public async Task UpdateAsync(int id, UpdateOrganizationDto input)
         {
             var org = await _organizationRepository.GetAsync(id);
-            org.Name = input.Name;
-            org.Code = input.Code;
+
+
+            await _organizationManager.CheckNotFoundAsync(id);
+            await _organizationManager.CheckDuplicateAsync(input.Code, input.Name, id);
+
+            ObjectMapper.Map(input, org);
 
             await _organizationRepository.UpdateAsync(org);
-
-            ObjectMapper.Map<Organization, OrganizationDto>(org);
         }
     }
 }

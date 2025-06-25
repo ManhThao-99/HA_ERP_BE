@@ -21,7 +21,7 @@ namespace HA_ERP.Staffs
             var staff = await _staffRepository.FindAsync(id);
             if (staff == null)
             {
-                throw new StaffNotFoundException(id);
+                HA_ERPValidationHelper.ThrowIfNotFound(staff);
             }
             return staff;
         }
@@ -31,7 +31,7 @@ namespace HA_ERP.Staffs
             var exists = await _staffRepository.AnyAsync(x => x.Name == name && x.Id != exceptId);
             if (exists)
             {
-                throw new StaffAlreadyExistsException(name);
+                HA_ERPValidationHelper.ThrowIfNotFound(exists);
             }
         }
     }
