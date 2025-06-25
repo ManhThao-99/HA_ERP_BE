@@ -42,8 +42,8 @@ namespace HA_ERP;
     typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
     typeof(AbpAccountWebOpenIddictModule),
     typeof(AbpAspNetCoreSerilogModule),
-    typeof(AbpSwashbuckleModule),
-    typeof(AbpAspNetCoreSignalRModule)
+    typeof(AbpSwashbuckleModule)
+    //typeof(AbpAspNetCoreSignalRModule)
 )]
 public class HA_ERPHttpApiHostModule : AbpModule
 {

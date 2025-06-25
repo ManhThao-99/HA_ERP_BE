@@ -22,10 +22,15 @@
 
 
 
-    "HAERP:00002": "Không tìm thấy nhân viên với id: {staffId}",
-    "HAERP:00002": "Không tìm thấy nhân viên với id: {staffName}",
+    "HA_ERP:20001": "The data already exists.",
+    "HA_ERP:20002": "Data not found.",
 
-    "HAERP:00001": "Đã tồn tại nhân viên với tên: {name}"
+    "HA_ERP:20003": "Cannot delete organization because there are still staff assigned.",
+
+
+    "Org:CodeRequired": "Code must be required",
+    "Org:NameRequired": "Name must be required"
+
   }
 
 

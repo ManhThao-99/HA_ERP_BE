@@ -55,13 +55,10 @@ namespace HA_ERP.Staffs
         [Authorize(HA_ERPPermissions.Staffs.Update)]
         public async Task UpdateAsync(int id, UpdateStaffDto input)
         {
-            // Kiểm tra tồn tại nhân viên cần sửa
             var staff = await _staffManager.GetStaffOrThrowAsync(id);
 
-            // Kiểm tra trùng tên (trừ chính nó)
             await _staffManager.CheckStaffNameExistsAsync(input.Name, id);
 
-            // Map dữ liệu từ input sang staff (có thể dùng ObjectMapper hoặc gán thủ công)
             ObjectMapper.Map(input, staff);
 
             await _staffRepository.UpdateAsync(staff);

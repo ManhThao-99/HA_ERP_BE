@@ -11,11 +11,12 @@ namespace HA_ERP.Organizations
 {
     public class CreateOrganizationDto
     {
-        [Required]
-        [StringLength(OrganizationConsts.MaxCodeLength)]
+        [Required(ErrorMessage = "Org:CodeRequired")]
+        [StringLength(OrganizationConsts.MaxCodeLength, ErrorMessage = "Org:CodeLength")]
         public string Code { get; set; }
-        [Required]
-        [StringLength(OrganizationConsts.MaxNameLength)]
+        [Required(ErrorMessage = "Org:NameRequired")]
+        [StringLength(OrganizationConsts.MaxCodeLength, ErrorMessage = "Org:NameLength")]
+
         public string Name { get; set; }
     }
 }

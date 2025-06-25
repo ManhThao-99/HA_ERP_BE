@@ -18,6 +18,7 @@ public class HA_ERPApplicationAutoMapperProfile : Profile
 
 
         CreateMap<Organization, OrganizationDto>().ReverseMap();
+        CreateMap<UpdateOrganizationDto, Organization>().ReverseMap();
     }
 }
     
