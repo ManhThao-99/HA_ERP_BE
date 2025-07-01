@@ -29,6 +29,7 @@ using Volo.Abp.Security.Claims;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
+using OpenIddict.Server.AspNetCore;
 using Abp.AspNetCore.SignalR;
 
 namespace HA_ERP;
@@ -49,6 +50,8 @@ public class HA_ERPHttpApiHostModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
+      
+
         PreConfigure<OpenIddictBuilder>(builder =>
         {
             builder.AddValidation(options =>
@@ -58,6 +61,8 @@ public class HA_ERPHttpApiHostModule : AbpModule
                 options.UseAspNetCore();
             });
         });
+
+      
     }
 
     public override void ConfigureServices(ServiceConfigurationContext context)
@@ -72,6 +77,11 @@ public class HA_ERPHttpApiHostModule : AbpModule
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
         ConfigureSwaggerServices(context, configuration);
+
+        Configure<OpenIddictServerAspNetCoreOptions>(options =>
+        {
+            options.DisableTransportSecurityRequirement = true;
+        });
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
