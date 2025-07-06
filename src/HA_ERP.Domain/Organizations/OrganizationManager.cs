@@ -24,9 +24,14 @@ namespace HA_ERP.Organizations
 
         public async Task CheckDuplicateAsync(string name, string code, int? exceptId = null)
         {
-            var existCode = await _organizationRepository.AnyAsync(x => x.Code == code);
+            var existCode = await _organizationRepository.AnyAsync(
+         x => x.Code == code && (!exceptId.HasValue || x.Id != exceptId.Value)
+     );
             HA_ERPValidationHelper.ThrowIfExists(existCode);
-            var existName = await _organizationRepository.AnyAsync(x => x.Name == name);
+
+            var existName = await _organizationRepository.AnyAsync(
+                x => x.Name == name && (!exceptId.HasValue || x.Id != exceptId.Value)
+            );
             HA_ERPValidationHelper.ThrowIfExists(existName);
         }
 

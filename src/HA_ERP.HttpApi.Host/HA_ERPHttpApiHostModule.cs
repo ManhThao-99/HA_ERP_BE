@@ -1,25 +1,28 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using HA_ERP.EntityFrameworkCore;
+using HA_ERP.MultiTenancy;
+using HA_ERP.Organizations;
+using HA_ERP.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using HA_ERP.EntityFrameworkCore;
-using HA_ERP.MultiTenancy;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite.Bundling;
 using Microsoft.OpenApi.Models;
+using OpenIddict.Server.AspNetCore;
 using OpenIddict.Validation.AspNetCore;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
 using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
@@ -29,8 +32,7 @@ using Volo.Abp.Security.Claims;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
-using OpenIddict.Server.AspNetCore;
-using Abp.AspNetCore.SignalR;
+using static OpenIddict.Abstractions.OpenIddictConstants.Permissions;
 
 namespace HA_ERP;
 
@@ -44,7 +46,7 @@ namespace HA_ERP;
     typeof(AbpAccountWebOpenIddictModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule)
-    //typeof(AbpAspNetCoreSignalRModule)
+
 )]
 public class HA_ERPHttpApiHostModule : AbpModule
 {
@@ -82,6 +84,9 @@ public class HA_ERPHttpApiHostModule : AbpModule
         {
             options.DisableTransportSecurityRequirement = true;
         });
+
+        context.Services.AddSignalR();
+        context.Services.AddTransient<IOrganizationNotifier, OrganizationSignalRNotifier>();
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
@@ -189,7 +194,13 @@ public class HA_ERPHttpApiHostModule : AbpModule
 
     public override void OnApplicationInitialization(ApplicationInitializationContext context)
     {
+
+       
+
         var app = context.GetApplicationBuilder();
+
+       
+
         var env = context.GetEnvironment();
 
         if (env.IsDevelopment())
@@ -218,7 +229,7 @@ public class HA_ERPHttpApiHostModule : AbpModule
         app.UseUnitOfWork();
         app.UseDynamicClaims();
         app.UseAuthorization();
-
+      
         app.UseSwagger();
         app.UseAbpSwaggerUI(c =>
         {
@@ -232,5 +243,11 @@ public class HA_ERPHttpApiHostModule : AbpModule
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapHub<OrganizationHub>("/signalr-hubs/organization");
+            // ... các endpoint khác
+        });
     }
 }
