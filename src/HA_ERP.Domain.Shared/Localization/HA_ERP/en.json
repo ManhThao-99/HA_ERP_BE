@@ -1,6 +1,8 @@
 {
   "culture": "en",
   "texts": {
+    // view text
+
     "AppName": "HA_ERP",
     "Menu:Home": "Home",
     "Menu:Organization": "Organization",
@@ -9,6 +11,8 @@
 
     "Welcome": "Welcome",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
+
+    // permission
 
     "Permission:Staffs": "Staffs Management",
     "Permission:Staffs.Create": "Creating new Staffs",
@@ -21,15 +25,21 @@
     "Permission:Organizations.Delete": "Deleting the Organizations",
 
 
+    // validate shared
 
     "HA_ERP:20001": "The data already exists.",
     "HA_ERP:20002": "Data not found.",
+    // validate each module
 
+    // organization
     "HA_ERP:20003": "Cannot delete organization because there are still staff assigned.",
-
-
     "Org:CodeRequired": "Code must be required",
-    "Org:NameRequired": "Name must be required"
+    "Org:NameRequired": "Name must be required",
+    // validate realtime
+
+    "HA_ERP:30001": "You do not have permission to use realtime features."
+
+
 
   }
 

@@ -17,14 +17,17 @@ namespace HA_ERP.Organizations
     {
         private readonly IOrganizationRepository _organizationRepository;
         private readonly OrganizationManager _organizationManager;
+        private readonly IOrganizationNotifier _notifier;
 
         public OrganizationAppService(
             IOrganizationRepository organizationRepository,
-            OrganizationManager organizationManager
+            OrganizationManager organizationManager,
+            IOrganizationNotifier notifier
         )
         {
             _organizationRepository = organizationRepository;
             _organizationManager = organizationManager;
+            _notifier = notifier;
         }
 
         [Authorize(HA_ERPPermissions.Organizations.Create)]
@@ -98,6 +101,8 @@ namespace HA_ERP.Organizations
             ObjectMapper.Map(input, org);
 
             await _organizationRepository.UpdateAsync(org);
+            await _notifier.NotifyOrganizationChangedAsync("Updated", id); 
+
         }
     }
 }

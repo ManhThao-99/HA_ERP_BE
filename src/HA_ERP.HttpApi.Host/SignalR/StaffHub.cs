@@ -1,7 +1,7 @@
-﻿using Volo.Abp.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
 namespace HA_ERP.SignalR
 {
-    public class StaffHub : AbpHub
+    public class StaffHub : Hub
     {
 
     }

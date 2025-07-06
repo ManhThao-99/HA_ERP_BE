@@ -11,13 +11,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Abp.AspNetCore.SignalR" Version="10.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.2.0" />
     <PackageReference Include="OpenIddict.Server.AspNetCore" Version="6.4.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
     <PackageReference Include="Serilog.Sinks.Async" Version="2.1.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.6" />
     <PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="9.2.0" />
-    <PackageReference Include="Volo.Abp.AspNetCore.SignalR" Version="9.2.1" />
     <PackageReference Include="Volo.Abp.Autofac" Version="9.2.0" />
     <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="9.2.0" />
     <PackageReference Include="Volo.Abp.Swashbuckle" Version="9.2.0" />
