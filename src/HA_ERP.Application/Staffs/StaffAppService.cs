@@ -1,9 +1,10 @@
+using HA_ERP.Permissions;
+using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HA_ERP.Permissions;
-using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.ObjectMapping;
 
 
 namespace HA_ERP.Staffs
@@ -53,7 +54,25 @@ namespace HA_ERP.Staffs
             return new PagedResultDto<StaffDto>(totalCount, staffDtoList);
         }
 
+        public async Task<PagedResultDto<StaffDto>> GetListByOrganizationAsync(int id, PagedAndSortedResultRequestDto input)
+        {
+            var staffList = await _staffRepository.GetListAsync(a => a.OrganizationId == id);
+            
+            var staffDtoList = ObjectMapper.Map<List<Staff>, List<StaffDto>>(staffList);
+
+            var totalCount = staffDtoList.Count;
+
+            return new PagedResultDto<StaffDto>(totalCount, staffDtoList);
+        }
+
        
+        public async Task<List<StaffSimpleDto>> GetManager(int id)
+        {
+            var staffs = await _staffRepository.GetStaffsWithManagerRoleAsync(id);
+
+            return ObjectMapper.Map<List<Staff>, List<StaffSimpleDto>>(staffs);
+        }
+
         [Authorize(HA_ERPPermissions.Staffs.Update)]
         public async Task UpdateAsync(int id, UpdateStaffDto input)
         {
@@ -66,27 +85,6 @@ namespace HA_ERP.Staffs
             await _staffRepository.UpdateAsync(staff);
         }
 
-        public async Task<PagedResultDto<StaffSimpleDto>> GetListByOrganizationAsync(int id, PagedAndSortedResultRequestDto input)
-        {
-            var staffs = await _staffRepository.GetStaffsWithManagerRoleAsync();
-
-            var filtered = staffs.Where(x => x.OrganizationId == id);
-
-            var totalCount = filtered.Count();
-
-            var items = filtered
-                .Skip(input.SkipCount)
-                .Take(input.MaxResultCount)
-                .Select(x => new StaffSimpleDto
-                {
-                    Id = x.Id,
-                    Name = x.Name
-                })
-                .ToList();
-
-            return new PagedResultDto<StaffSimpleDto>(totalCount, items);
-        }
-
-
+       
     }
 }

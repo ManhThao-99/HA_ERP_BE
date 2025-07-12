@@ -14,8 +14,9 @@ namespace HA_ERP.Staffs
 
         Task<PagedResultDto<StaffDto>> GetListAsync();
 
-        Task<PagedResultDto<StaffSimpleDto>> GetListByOrganizationAsync(int id, PagedAndSortedResultRequestDto input);
+        Task<PagedResultDto<StaffDto>> GetListByOrganizationAsync(int id, PagedAndSortedResultRequestDto input);
 
+        Task <List<StaffSimpleDto>> GetManager(int id);
 
         Task<StaffDto> CreateAsync(CreateStaffDto input);
 

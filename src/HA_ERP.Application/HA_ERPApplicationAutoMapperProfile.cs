@@ -15,6 +15,7 @@ public class HA_ERPApplicationAutoMapperProfile : Profile
         CreateMap<Staff, StaffDto>().ReverseMap();
         CreateMap<CreateStaffDto, Staff>().ReverseMap();
         CreateMap<UpdateStaffDto, Staff>().ReverseMap();
+        CreateMap<StaffSimpleDto, Staff>().ReverseMap();
 
 
         CreateMap<Organization, OrganizationDto>().ReverseMap();
