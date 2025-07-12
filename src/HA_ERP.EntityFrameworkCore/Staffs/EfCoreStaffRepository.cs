@@ -20,7 +20,7 @@ namespace HA_ERP.Staffs
 
         }
 
-        public async Task<List<Staff>> GetStaffsWithManagerRoleAsync()
+        public async Task<List<Staff>> GetStaffsWithManagerRoleAsync(int id)
         {
             var dbContext = await GetDbContextAsync();
 
@@ -40,7 +40,7 @@ namespace HA_ERP.Staffs
                 from staff in dbContext.Staffs
                 join user in dbContext.Users on staff.UserId equals user.Id
                 join userRole in dbContext.UserRoles on user.Id equals userRole.UserId
-                where userRole.RoleId == managerRoleId
+                where userRole.RoleId == managerRoleId && staff.OrganizationId == id
                 select staff
             ).ToListAsync();
 
