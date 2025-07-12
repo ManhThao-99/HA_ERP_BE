@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HA_ERP.Permissions;
 using Microsoft.AspNetCore.Authorization;
@@ -52,6 +53,7 @@ namespace HA_ERP.Staffs
             return new PagedResultDto<StaffDto>(totalCount, staffDtoList);
         }
 
+       
         [Authorize(HA_ERPPermissions.Staffs.Update)]
         public async Task UpdateAsync(int id, UpdateStaffDto input)
         {
@@ -63,5 +65,28 @@ namespace HA_ERP.Staffs
 
             await _staffRepository.UpdateAsync(staff);
         }
+
+        public async Task<PagedResultDto<StaffSimpleDto>> GetListByOrganizationAsync(int id, PagedAndSortedResultRequestDto input)
+        {
+            var staffs = await _staffRepository.GetStaffsWithManagerRoleAsync();
+
+            var filtered = staffs.Where(x => x.OrganizationId == id);
+
+            var totalCount = filtered.Count();
+
+            var items = filtered
+                .Skip(input.SkipCount)
+                .Take(input.MaxResultCount)
+                .Select(x => new StaffSimpleDto
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                })
+                .ToList();
+
+            return new PagedResultDto<StaffSimpleDto>(totalCount, items);
+        }
+
+
     }
 }
