@@ -34,5 +34,7 @@ namespace HA_ERP.Staffs
                 HA_ERPValidationHelper.ThrowIfNotFound(exists);
             }
         }
+
+
     }
 }

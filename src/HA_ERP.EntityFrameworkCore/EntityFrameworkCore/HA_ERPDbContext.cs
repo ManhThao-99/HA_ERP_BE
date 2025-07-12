@@ -49,6 +49,7 @@ public class HA_ERPDbContext :
     public DbSet<IdentityLinkUser> LinkUsers { get; set; }
     public DbSet<IdentityUserDelegation> UserDelegations { get; set; }
     public DbSet<IdentitySession> Sessions { get; set; }
+    public DbSet<IdentityUserRole> UserRoles { get; set; }
     // Tenant Management
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
@@ -120,7 +121,10 @@ public class HA_ERPDbContext :
                 .HasForeignKey(x => x.ManagerId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict); //optional, can be null
-
+            b.HasOne<IdentityUser>()
+                 .WithOne()
+                 .HasForeignKey<Staff>(x => x.UserId)
+                 .IsRequired(false);
 
         });
 
@@ -130,6 +134,7 @@ public class HA_ERPDbContext :
             b.ConfigureByConvention();
             b.Property(x => x.Code).IsRequired().HasMaxLength(6); //temp (ORG***)
             b.Property(x => x.Name).IsRequired().HasMaxLength(50);
+
 
         });
 
