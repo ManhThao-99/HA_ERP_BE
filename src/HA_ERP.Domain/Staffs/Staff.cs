@@ -29,23 +29,20 @@ namespace HA_ERP.Staffs
             
         }
 
-        public Staff(int organizationId, int managerId, string code, string name, string mobile, string email, string address, string bankAccountName, string bankAccountNo, string bankName, string bankAddress)
+        public Staff(int organizationId, int? managerId, Guid? userId, string code, string name, string mobile, string email, string address, string bankAccountName, string bankAccountNo, string bankName, string bankAddress)
         {
             OrganizationId = organizationId;
             ManagerId = managerId;
+            UserId = userId;
             Code = code;
-
             Name = name;
             Mobile = mobile;
             Email = email;
-
             Address = address;
             BankAccountName = bankAccountName;
             BankAccountNo = bankAccountNo;
-
             BankName = bankName;
             BankAddress = bankAddress;
-            
         }
     }
    

@@ -35,6 +35,7 @@ namespace HA_ERP.Staffs
         public string BankName { get; set; }
         [StringLength(StaffConsts.MaxBankAddressLength)]
         public string BankAddress { get; set; }
+       
 
     }
 }
