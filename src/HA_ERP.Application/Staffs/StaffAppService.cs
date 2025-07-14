@@ -18,7 +18,7 @@ namespace HA_ERP.Staffs
         private readonly IStaffRepository _staffRepository;
 
 
-        public StaffAppService(StaffManager staffManager, IStaffRepository staffRepository)
+        public StaffAppService(StaffManager staffManager, IStaffRepository staffRepository) 
         {
             this._staffManager = staffManager;
             _staffRepository = staffRepository;
