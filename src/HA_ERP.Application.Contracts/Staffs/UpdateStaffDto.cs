@@ -9,35 +9,26 @@ namespace HA_ERP.Staffs
 {
     public class UpdateStaffDto
     {
-        [Required]
-        public int OrganizationId { get; set; }
+        public Guid? OrganizationUnitId { get; set; }
         public int? ManagerId { get; set; }
         [Required]
         [StringLength(StaffConsts.MaxCodeLength)]
         public string Code { get; set; }
-        [Required]
         [StringLength(StaffConsts.MaxNameLength)]
-        public string Name { get; set; }
-        [Required]
+        public string? Name { get; set; }
         [StringLength(StaffConsts.MaxMobileLength)]
-        public string Mobile { get; set; }
-        [Required]
+        public string? Mobile { get; set; }
         [StringLength(StaffConsts.MaxEmailLength)]
-        public string Email { get; set; }
-        [Required]
+        public string? Email { get; set; }
         [StringLength(StaffConsts.MaxAddressLength)]
-        public string Address { get; set; }
-        [Required]
+        public string? Address { get; set; }
         [StringLength(StaffConsts.MaxBankAccountNameLength)]
-        public string BankAccountName { get; set; }
-        [Required]
+        public string? BankAccountName { get; set; }
         [StringLength(StaffConsts.MaxBankAccountNoLength)]
-        public string BankAccountNo { get; set; }
-        [Required]
+        public string? BankAccountNo { get; set; }
         [StringLength(StaffConsts.MaxBankNameLength)]
-        public string BankName { get; set; }
-        [Required]
+        public string? BankName { get; set; }
         [StringLength(StaffConsts.MaxBankAddressLength)]
-        public string BankAddress { get; set; }
+        public string? BankAddress { get; set; }
     }
 }

@@ -12,10 +12,7 @@ public class HA_ERPPermissionDefinitionProvider : PermissionDefinitionProvider
         //Define your own permissions here. Example:
         //myGroup.AddPermission(HA_ERPPermissions.MyPermission1, L("Permission:MyPermission1"));
 
-        var organizationsPermission = myGroup.AddPermission(HA_ERPPermissions.Organizations.Default, L("Permission:Organizations"));
-        organizationsPermission.AddChild(HA_ERPPermissions.Organizations.Create, L("Permission:Organizations.Create"));
-        organizationsPermission.AddChild(HA_ERPPermissions.Organizations.Update, L("Permission:Organizations.Update"));
-        organizationsPermission.AddChild(HA_ERPPermissions.Organizations.Delete, L("Permission:Organizations.Delete"));
+      
 
         var staffsPermission = myGroup.AddPermission(HA_ERPPermissions.Staffs.Default, L("Permission:Staffs"));
         staffsPermission.AddChild(HA_ERPPermissions.Staffs.Create, L("Permission:Staffs.Create"));
