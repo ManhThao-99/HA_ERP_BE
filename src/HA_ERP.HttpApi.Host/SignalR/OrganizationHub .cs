@@ -1,5 +1,4 @@
-﻿using HA_ERP.Organizations;
-using HA_ERP.Permissions;
+﻿using HA_ERP.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System;
@@ -18,18 +17,17 @@ namespace HA_ERP.SignalR
         }
 
 
-        [Authorize(Policy = HA_ERPPermissions.Organizations.Update)]
-        public async Task NotifyOrganizationChangedAsync(string action, int organizationId)
-        {
-            var result = await _authorizationService.AuthorizeAsync(Context.User, HA_ERPPermissions.Organizations.Update);
-            if (!result.Succeeded)
-            {
-                throw new BusinessException(HA_ERPDomainErrorCodes.RealtimePermissionDenied);
-            }
+        //public async Task NotifyOrganizationChangedAsync(string action, int organizationId)
+        //{
+        //    var result = await _authorizationService.AuthorizeAsync(Context.User, HA_ERPPermissions.Organizations.Update);
+        //    if (!result.Succeeded)
+        //    {
+        //        throw new BusinessException(HA_ERPDomainErrorCodes.RealtimePermissionDenied);
+        //    }
 
-            await Clients.Group(organizationId.ToString())
-                .SendAsync("OrganizationChanged", action, organizationId);
-        }
+        //    await Clients.Group(organizationId.ToString())
+        //        .SendAsync("OrganizationChanged", action, organizationId);
+        //}
 
 
         // Các hàm join/leave group không cần phân quyền đặc biệt

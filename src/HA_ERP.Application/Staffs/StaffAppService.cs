@@ -1,5 +1,6 @@
 using HA_ERP.Permissions;
 using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,9 +55,9 @@ namespace HA_ERP.Staffs
             return new PagedResultDto<StaffDto>(totalCount, staffDtoList);
         }
 
-        public async Task<PagedResultDto<StaffDto>> GetListByOrganizationAsync(int id, PagedAndSortedResultRequestDto input)
+        public async Task<PagedResultDto<StaffDto>> GetListByOrganizationAsync(Guid id, PagedAndSortedResultRequestDto input)
         {
-            var staffList = await _staffRepository.GetListAsync(a => a.OrganizationId == id);
+            var staffList = await _staffRepository.GetListAsync(a => a.OrganizationUnitId == id);
             
             var staffDtoList = ObjectMapper.Map<List<Staff>, List<StaffDto>>(staffList);
 
@@ -66,7 +67,7 @@ namespace HA_ERP.Staffs
         }
 
        
-        public async Task<List<StaffSimpleDto>> GetManager(int id)
+        public async Task<List<StaffSimpleDto>> GetManager(Guid id)
         {
             var staffs = await _staffRepository.GetStaffsWithManagerRoleAsync(id);
 
@@ -85,6 +86,7 @@ namespace HA_ERP.Staffs
             await _staffRepository.UpdateAsync(staff);
         }
 
-       
+      
+
     }
 }

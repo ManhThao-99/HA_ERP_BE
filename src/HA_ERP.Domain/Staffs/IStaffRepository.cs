@@ -9,6 +9,6 @@ namespace HA_ERP.Staffs
 {
     public interface IStaffRepository : IRepository<Staff, int>
     {
-        Task<List<Staff>> GetStaffsWithManagerRoleAsync(int id);
+        Task<List<Staff>> GetStaffsWithManagerRoleAsync(Guid id);
     }
 }
