@@ -102,6 +102,7 @@ public class HA_ERPDbContext :
             b.Property(x => x.Name).IsRequired(false).HasMaxLength(36);
             b.Property(x => x.Mobile).IsRequired(false).HasMaxLength(12);
             b.Property(x => x.Email).IsRequired(false).HasMaxLength(100);
+            b.Property(x => x.ManagerId).IsRequired(false);
             b.Property(x => x.Address).HasMaxLength(150);
             b.Property(x => x.BankAccountName).HasMaxLength(36);
             b.Property(x => x.BankAccountNo).HasMaxLength(36);
