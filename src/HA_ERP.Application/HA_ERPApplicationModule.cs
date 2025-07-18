@@ -1,4 +1,5 @@
 ﻿using Volo.Abp.Account;
+using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
@@ -17,7 +18,8 @@ namespace HA_ERP;
     typeof(AbpPermissionManagementApplicationModule),
     typeof(AbpTenantManagementApplicationModule),
     typeof(AbpFeatureManagementApplicationModule),
-    typeof(AbpSettingManagementApplicationModule)
+    typeof(AbpSettingManagementApplicationModule),
+     typeof(AbpIdentityApplicationModule)
     )]
 public class HA_ERPApplicationModule : AbpModule
 {
@@ -27,5 +29,13 @@ public class HA_ERPApplicationModule : AbpModule
         {
             options.AddMaps<HA_ERPApplicationModule>();
         });
+
+        Configure<AbpExceptionHandlingOptions>(options =>
+        {
+            options.SendExceptionsDetailsToClients = true;
+        });
     }
+
+
+
 }
