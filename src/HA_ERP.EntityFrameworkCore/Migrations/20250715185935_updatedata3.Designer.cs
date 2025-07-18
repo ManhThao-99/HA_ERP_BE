@@ -4,6 +4,7 @@ using HA_ERP.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace HA_ERP.Migrations
 {
     [DbContext(typeof(HA_ERPDbContext))]
-    partial class HA_ERPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250715185935_updatedata3")]
+    partial class updatedata3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -134,8 +137,6 @@ namespace HA_ERP.Migrations
                     b.HasIndex("Mobile")
                         .IsUnique()
                         .HasFilter("[Mobile] IS NOT NULL");
-
-                    b.HasIndex("OrganizationUnitId");
 
                     b.HasIndex("UserId")
                         .IsUnique()
@@ -1902,10 +1903,6 @@ namespace HA_ERP.Migrations
                         .WithMany()
                         .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Volo.Abp.Identity.OrganizationUnit", null)
-                        .WithMany()
-                        .HasForeignKey("OrganizationUnitId");
 
                     b.HasOne("Volo.Abp.Identity.IdentityUser", null)
                         .WithOne()

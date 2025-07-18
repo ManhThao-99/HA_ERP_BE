@@ -25,7 +25,8 @@ namespace HA_ERP.EntityFrameworkCore;
     typeof(AbpBackgroundJobsEntityFrameworkCoreModule),
     typeof(AbpAuditLoggingEntityFrameworkCoreModule),
     typeof(AbpTenantManagementEntityFrameworkCoreModule),
-    typeof(AbpFeatureManagementEntityFrameworkCoreModule)
+    typeof(AbpFeatureManagementEntityFrameworkCoreModule),
+    typeof(AbpIdentityEntityFrameworkCoreModule)
     )]
 public class HA_ERPEntityFrameworkCoreModule : AbpModule
 {

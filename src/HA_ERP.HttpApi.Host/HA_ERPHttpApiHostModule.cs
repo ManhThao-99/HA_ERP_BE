@@ -1,6 +1,5 @@
 using HA_ERP.EntityFrameworkCore;
 using HA_ERP.MultiTenancy;
-using HA_ERP.Organizations;
 using HA_ERP.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
@@ -86,7 +85,7 @@ public class HA_ERPHttpApiHostModule : AbpModule
         });
 
         context.Services.AddSignalR();
-        context.Services.AddTransient<IOrganizationNotifier, OrganizationSignalRNotifier>();
+        //context.Services.AddTransient<IOrganizationNotifier, OrganizationSignalRNotifier>();
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)

@@ -13,7 +13,6 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using HA_ERP.Staffs;
-using HA_ERP.Organizations;
 using Volo.Abp.EntityFrameworkCore.Modeling;
 namespace HA_ERP.EntityFrameworkCore;
 
@@ -56,7 +55,6 @@ public class HA_ERPDbContext :
 
     //app dbsets
     public DbSet<Staff> Staffs { get; set; }
-    public DbSet<Organization> Organizations { get; set; }
 
     #endregion
 
@@ -101,9 +99,9 @@ public class HA_ERPDbContext :
             b.ToTable(HA_ERPConsts.DbTablePrefix + "Staffs", HA_ERPConsts.DbSchema);
             b.ConfigureByConvention();
             b.Property(x => x.Code).IsRequired().HasMaxLength(12); //temp (EMP*********)
-            b.Property(x => x.Name).IsRequired().HasMaxLength(36);
-            b.Property(x => x.Mobile).IsRequired().HasMaxLength(12);
-            b.Property(x => x.Email).IsRequired().HasMaxLength(100);
+            b.Property(x => x.Name).IsRequired(false).HasMaxLength(36);
+            b.Property(x => x.Mobile).IsRequired(false).HasMaxLength(12);
+            b.Property(x => x.Email).IsRequired(false).HasMaxLength(100);
             b.Property(x => x.Address).HasMaxLength(150);
             b.Property(x => x.BankAccountName).HasMaxLength(36);
             b.Property(x => x.BankAccountNo).HasMaxLength(36);
@@ -112,10 +110,11 @@ public class HA_ERPDbContext :
             b.HasIndex(x => x.Code).IsUnique();
             b.HasIndex(x => x.Email).IsUnique();
             b.HasIndex(x => x.Mobile).IsUnique();
-            b.HasOne<Organization>()
+            b.Property(x => x.OrganizationUnitId).IsRequired(false);
+            b.HasOne<OrganizationUnit>()
                 .WithMany()
-                .HasForeignKey(x => x.OrganizationId)
-                .IsRequired();
+                .HasForeignKey(x => x.OrganizationUnitId)
+                .IsRequired(false);
             b.HasOne<Staff>()
                 .WithMany()
                 .HasForeignKey(x => x.ManagerId)
@@ -128,15 +127,7 @@ public class HA_ERPDbContext :
 
         });
 
-        builder.Entity<Organization>(b =>
-        {
-            b.ToTable(HA_ERPConsts.DbTablePrefix + "Organizations", HA_ERPConsts.DbSchema);
-            b.ConfigureByConvention();
-            b.Property(x => x.Code).IsRequired().HasMaxLength(6); //temp (ORG***)
-            b.Property(x => x.Name).IsRequired().HasMaxLength(50);
-
-
-        });
+       
 
     }
 }

@@ -17,14 +17,6 @@ public static class HA_ERPPermissions
         public const string View = Default + ".View";
     }
 
-    public static class Organizations
-    {
-        public const string Default = GroupName + ".Organizations";
-        public const string Create = Default + ".Create";
-        public const string Update = Default + ".Update";
-        public const string Delete = Default + ".Delete";
-        public const string View = Default + ".View";
-    }
-
+   
 
 }

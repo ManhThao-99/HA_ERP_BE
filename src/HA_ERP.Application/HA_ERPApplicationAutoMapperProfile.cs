@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using HA_ERP.Organizations;
 using HA_ERP.Staffs;
 
 namespace HA_ERP;
@@ -18,8 +17,7 @@ public class HA_ERPApplicationAutoMapperProfile : Profile
         CreateMap<StaffSimpleDto, Staff>().ReverseMap();
 
 
-        CreateMap<Organization, OrganizationDto>().ReverseMap();
-        CreateMap<UpdateOrganizationDto, Organization>().ReverseMap();
+        
     }
 }
     
