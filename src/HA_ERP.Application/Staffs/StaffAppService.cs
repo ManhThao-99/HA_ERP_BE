@@ -28,6 +28,9 @@ namespace HA_ERP.Staffs
         [Authorize(HA_ERPPermissions.Staffs.Create)]
         public async Task<StaffDto> CreateAsync(CreateStaffDto input)
         {
+            await _staffManager.CheckDuplicateFieldAsync(input.Name, "Name");
+            await _staffManager.CheckDuplicateFieldAsync(input.Code, "Code");
+            await _staffManager.CheckDuplicateFieldAsync(input.Email, "Email");
             var staff = ObjectMapper.Map<CreateStaffDto, Staff>(input);
             await _staffRepository.InsertAsync(staff);
             return ObjectMapper.Map<Staff, StaffDto>(staff);
@@ -78,8 +81,10 @@ namespace HA_ERP.Staffs
         public async Task UpdateAsync(int id, UpdateStaffDto input)
         {
             var staff = await _staffManager.GetStaffOrThrowAsync(id);
+            await _staffManager.CheckDuplicateFieldAsync(input.Name, "Name",id);
+            await _staffManager.CheckDuplicateFieldAsync(input.Code, "Code",id);
+            await _staffManager.CheckDuplicateFieldAsync(input.Email, "Email", id);
 
-            await _staffManager.CheckStaffNameExistsAsync(input.Name, id);
 
             ObjectMapper.Map(input, staff);
 
