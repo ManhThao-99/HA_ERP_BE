@@ -17,6 +17,7 @@ using System.Linq;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
+using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
@@ -82,6 +83,11 @@ public class HA_ERPHttpApiHostModule : AbpModule
         Configure<OpenIddictServerAspNetCoreOptions>(options =>
         {
             options.DisableTransportSecurityRequirement = true;
+        });
+
+        Configure<AbpExceptionHandlingOptions>(options =>
+        {
+            options.SendExceptionsDetailsToClients = false;
         });
 
         context.Services.AddSignalR();
