@@ -11,7 +11,6 @@ namespace HA_ERP.OrganizationUnits
             CreateMap<CreateOrganizationUnitDto, OrganizationUnit>();
             CreateMap<UpdateOrganizationUnitDto, OrganizationUnit>();
             CreateMap<OrganizationUnit, OrganizationUnitTreeDto>();
-
         }
     }
 }

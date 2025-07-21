@@ -1,8 +1,10 @@
-﻿using System;
+﻿using HA_ERP;
+using HA_ERP.OrganizationUnits;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HA_ERP.OrganizationUnits;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -78,5 +80,15 @@ public class OrganizationUnitAppService
         await _manager.CreateAsync(orgUnit);
 
         return ObjectMapper.Map<OrganizationUnit, OrganizationUnitDto>(orgUnit);
+    }
+
+    public override async Task DeleteAsync(Guid id)
+    {
+        var hasChildren = await _repository.AnyAsync(x => x.ParentId == id);
+        if (hasChildren)
+        {
+            throw new BusinessException(HA_ERPDomainErrorCodes.OrganizationHasStaff);
+        }
+        await base.DeleteAsync(id);
     }
 }
